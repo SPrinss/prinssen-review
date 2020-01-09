@@ -1,0 +1,51 @@
+{
+  "name": "prinssen-review",
+  "dependencies": {
+    "@vaadin/vaadin-combo-box": "^5.0.9",
+    "@vaadin/vaadin-date-picker": "^4.0.5",
+    "lit-element": "^2.1.0"
+  },
+  "devDependencies": {
+    "@open-wc/building-rollup": "^0.9.0",
+    "api-viewer-element": "^0.2.5",
+    "chai": "^4.2.0",
+    "es-dev-server": "^1.5.0",
+    "firebase-functions": "^3.0.1",
+    "firebase-tools": "^7.7.0",
+    "husky": "^3.0.9",
+    "mocha": "^5.2.0",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.15.4",
+    "rollup-plugin-cpy": "^2.0.1",
+    "rollup-plugin-index-html": "^1.5.9",
+    "wct-mocha": "^1.0.0",
+    "web-component-analyzer": "^0.1.20",
+    "web-component-tester": "^6.9.2"
+  },
+  "scripts": {
+    "setup": "npm install",
+    "setup:clear": "rm -rf node_modules && npm install",
+    "lint:eslint": "eslint --ext .js . --ignore-path .gitignore",
+    "format:eslint": "eslint --ext .js . --fix --ignore-path .gitignore",
+    "lint": "npm run lint:eslint",
+    "format": "npm run format:eslint",
+    "documentation": "wca analyze src --outFile custom-elements.json --format json",
+    "start:build": "cd dist && es-dev-server --open",
+    "build": "rimraf dist && rollup -c rollup.config.js",
+    "start": "es-dev-server --app-index index.html --node-resolve --open",
+    "start:watch": "es-dev-server --app-index index.html --node-resolve --open --watch",
+    "start:demo": "wca analyze src --outFile custom-elements.json --format json && es-dev-server --app-index demo.html --node-resolve --open --watch",
+    "start:compatibility": "es-dev-server --app-index index.html --compatibility all --node-resolve --open --watch",
+    "serve": "firebase serve",
+    "deploy:staging": "firebase deploy --only hosting:staging",
+    "deploy:production": "firebase deploy --only hosting:production",
+    "deploy:functions": "firebase deploy --only functions",
+    "test": "wct --npm"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@open-wc/eslint-config",
+      "eslint-config-prettier"
+    ]
+  }
+}

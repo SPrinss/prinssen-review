@@ -1,0 +1,6 @@
+{
+  "name": "prinssen-review",
+  "short_name": "prinssen-review",
+  "start_url": "/",
+  "display": "standalone"
+}
