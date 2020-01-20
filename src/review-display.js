@@ -138,11 +138,15 @@ class ReviewDisplay extends LitElement {
 
       .icon-span-container span {
         vertical-align:middle;
+        text-align: end;
       }
 
       prinssen-ui-icon {
         margin-right: 8px;
-        --prinssen-ui-icon-color: rgb(52, 126, 177);
+      }
+      
+      #nav-icon {
+        --prinssen-ui-icon-color: #877DE8;
       }
 
       prinssen-ui-icon:hover {
@@ -157,6 +161,7 @@ class ReviewDisplay extends LitElement {
       <section>
 
         <prinssen-ui-icon
+          id="nav-icon"
           .icon="${'arrow-left'}"
           @click=${this._handleBackClick}
         ></prinssen-ui-icon>
@@ -173,23 +178,23 @@ class ReviewDisplay extends LitElement {
         </div>
           <div id="header-details-container">
             <div class="icon-span-container">
+              <span id="date">${this._toReadableDate(this.timePerformed)}</span>
               <prinssen-ui-icon
                 .icon="${'event'}"
               ></prinssen-ui-icon>
-              <span id="date">${this._toReadableDate(this.timePerformed)}</span>
             </div>
 
             <div class="icon-span-container">
+              <span>${this.theater}</span>
               <prinssen-ui-icon
                 .icon="${'local-play'}"
               ></prinssen-ui-icon>
-              <span>${this.theater}</span>
             </div>
             <div class="icon-span-container">
+              <span>${this.city}</span>
               <prinssen-ui-icon
                 .icon="${'city'}"
               ></prinssen-ui-icon>
-              <span>${this.city}</span>
             </div>
 
           </div>

@@ -10,11 +10,14 @@ class QueryForm extends LitElement {
   static get styles() {
     return css`
       vaadin-combo-box {
-        width: 160px;
+        min-width: 300px;
         margin: 0 4px;
       }
       vaadin-date-picker {
         margin: 0 4px;
+      }
+      #title-box  {
+        min-width: 600px;
       }
       `;
   }

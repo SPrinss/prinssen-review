@@ -1,0 +1,56 @@
+@import "../styles/base.css";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+header {
+  display: flex;
+  height: 60px;
+  width: 100%;
+}
+header > nav { 
+  width: 100%;
+  padding: 0 124px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 var(--ca-margin);
+  align-items: center;
+  background-color: white;
+}
+
+header > nav > ul > li {
+  display: inline-block;
+  font-family: 'Karla', sans-serif;
+  padding: 0 12px;
+}
+
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+main section {
+  padding: 64px 128px;
+}
+
+
+.text-center-block {
+  text-align: center;
+}
+
+[hidden] {
+  display: none;
+}

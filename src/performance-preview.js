@@ -17,6 +17,7 @@ class PerformancePreview extends LitElement {
         display: flex;
         flex-direction: column;
         max-width: 100%;
+        min-height: 100%;
       }
       section {
         display: block;
@@ -58,6 +59,7 @@ class PerformancePreview extends LitElement {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         padding: 0;
+        flex: 1;
       }
 
       .persons-type-container {
@@ -92,7 +94,7 @@ class PerformancePreview extends LitElement {
 
       prinssen-ui-button {
         margin: 12px 24px;
-        --prinssen-ui-button-fill: rgb(52, 126, 177);
+        --prinssen-ui-button-fill: #877DE8;
         --prinssen-ui-button-text-color: white;
       }
 
@@ -115,11 +117,11 @@ class PerformancePreview extends LitElement {
         flex-direction: column;
         justify-content: space-between;
         min-width: 225px;
+        text-align: end;
       }
 
       .icon-span-container:not(:last-of-type) {
         color: hsl(212, 20%, 13%);
-        padding: 0 24px 0 0;  
       }
 
       .icon-span-container span {
@@ -148,23 +150,23 @@ class PerformancePreview extends LitElement {
         </div>
           <div id="header-details-container">
             <div class="icon-span-container">
+              <span id="date">${this._toReadableDate(this.timePerformed)}</span>
               <prinssen-ui-icon
                 .icon="${'event'}"
               ></prinssen-ui-icon>
-              <span id="date">${this._toReadableDate(this.timePerformed)}</span>
             </div>
 
             <div class="icon-span-container">
+              <span class="clickable" data-name=${this.theater} @click="${this._handleTheaterClick}">${this.theater}</span>
               <prinssen-ui-icon
                 .icon="${'city'}"
               ></prinssen-ui-icon>
-              <span class="clickable" data-name=${this.theater} @click="${this._handleTheaterClick}">${this.theater}</span>
             </div>
             <div class="icon-span-container">
+              <span class="clickable" data-name=${this.city} @click="${this._handleCityClick}">${this.city}</span>
               <prinssen-ui-icon
                 .icon="${'place'}"
               ></prinssen-ui-icon>
-              <span class="clickable" data-name=${this.city} @click="${this._handleCityClick}">${this.city}</span>
             </div>
 
           </div>
