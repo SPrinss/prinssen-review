@@ -72,17 +72,23 @@ class PerformancePreview extends LitElement {
 
       .persons-type-header {
         color: hsl(213, 9%, 44%);
-        padding: 0 0 0 24px;
       }
 
       .persons-type-header * {
-        padding: 12px 0 0 0;
         margin: 0;
         font-weight: 700;
+        padding-top: 12px;
+      }
+
+      .persons-type-container:first-of-type  {
+        padding-left: 24px;
+      }
+
+      .persons-type-container:last-of-type {
+        padding-right: 24px;
       }
 
       .persons-type-body {
-        padding: 0 0 0 24px;
         height: 100%;
       }
 

@@ -13,7 +13,7 @@ class PrinssenAbout extends BaseElement {
   constructor() {
     super();
     this.template = () => html`
-    <link rel="stylesheet" href="../src/styles/prinssen-about.css">
+    <link rel="stylesheet" href="../styles/prinssen-about.css">
     
     
     About

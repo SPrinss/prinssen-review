@@ -14,7 +14,7 @@ class FourOFourPage extends BaseElement {
   constructor() {
     super();
     this.template = () => html`
-    <link rel="stylesheet" href="../src/styles/four-o-four-page.css">
+    <link rel="stylesheet" href="../styles/four-o-four-page.css">
     `;
   }
 

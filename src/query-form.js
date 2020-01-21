@@ -173,6 +173,7 @@ class QueryForm extends LitElement {
   _handleSelectedGroupChanged(evt) {
     const filteredGroup = this.groups.filter(group => group.name === evt.detail.value);
     this.selectedGroup = filteredGroup[0]  || {};
+    console.log(this.groups, filteredGroup)
     this.dispatchEvent(new CustomEvent('selected-group-changed', {detail: {value: this.selectedGroup}}))
 
   }

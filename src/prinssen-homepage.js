@@ -13,10 +13,20 @@ class PrinssenHomepage extends BaseElement {
   constructor() {
     super();
     this.template = () => html`
-    <link rel="stylesheet" href="../src/styles/prinssen-homepage.css">
+    <link rel="stylesheet" href="../styles/prinssen-homepage.css">
     
-    
-    Home
+
+    <main>
+      <header>
+        <div id="overlay">
+          <div>
+            <h1>Theater recensies, interviews & tips.</h1>
+          </div>
+          <div>
+          </div>
+        </div>
+      </header>
+    </main>
     `;
   }
 

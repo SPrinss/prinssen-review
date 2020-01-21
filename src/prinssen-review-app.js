@@ -53,7 +53,7 @@ class PrinssenReviewApp extends BaseElement {
     this._startFirebase();
 
     this.template = () => html`
-      <link rel="stylesheet" href="../src/styles/prinssen-review-app.css">
+      <link rel="stylesheet" href="../styles/prinssen-review-app.css">
 
       <prinssen-location
         @url-changed="${this._handleURLChanged.bind(this)}"

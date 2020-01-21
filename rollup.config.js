@@ -5,8 +5,8 @@ const resolve = require('rollup-plugin-node-resolve');
 const { terser } = require('rollup-plugin-terser');
 const babel = require('rollup-plugin-babel');
 const indexHTML = require('rollup-plugin-index-html');
-// const cpy = require('rollup-plugin-cpy');
-
+const cpy = require('rollup-plugin-cpy');
+const inlineCSS = require('rollup-plugin-stylesheet-inliner');
 const production = !process.env.ROLLUP_WATCH;
 const BUILDFOLDER = 'dist'
 /**
@@ -33,6 +33,7 @@ module.exports = function createBasicConfig(_options) {
       dynamicImportFunction: 'importShim',
     },
     plugins: [
+      inlineCSS(),
       // parse input index.html as input and feed any modules found to rollup
       indexHTML({
         ...(options.indexHTMLPlugin || {}),
@@ -45,12 +46,13 @@ module.exports = function createBasicConfig(_options) {
      }),
 
     //  Copy files to the build folder that are not impported by modules imported by index.html such as pictures or init scripts.
-    //  cpy({
-    //     dest: options.outputDir,
-    //     options: {
-    //       parents: true
-    //     },
-    //   }),
+     cpy({
+        files: ['./images/**'],
+        dest: options.outputDir,
+        options: {
+          parents: true
+        },
+      }),
 
       // resolve bare import specifiers
       resolve({
