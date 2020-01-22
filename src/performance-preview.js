@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit-element';
+import { BaseElement, html} from './base-element.js';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import './prinssen-ui-icon.js';
 import './prinssen-ui-button.js';
@@ -6,224 +6,7 @@ import './prinssen-ui-button.js';
 /**
  * @customElement
  */
-class PerformancePreview extends LitElement {
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-
-      main {
-        display: flex;
-        flex-direction: column;
-        max-width: 100%;
-        min-height: 100%;
-      }
-      section {
-        display: block;
-        width: 100%;
-        padding: 12px 24px;
-        box-sizing: border-box;
-      }
-      section:not(:last-of-type) {
-        border-bottom: 2px solid hsl(210, 23%, 95%);
-      }
-
-      header {
-        display: flex;
-      }
-
-      #title {
-        font-weight: 700;
-        color: hsl(202, 57%, 15%);
-        margin: 24px 0 6px 0;
-      }
-
-      .groups-span {
-        color: hsl(213, 9%, 44%);
-      }
-
-      .clickable:hover {
-        cursor: pointer;
-      }
-
-      prinssen-ui-icon {
-        --prinssen-ui-icon-size: 24px;
-        --prinssen-ui-icon-color: hsl(212, 20%, 68%);
-        position: relative;
-        top: 5px;
-        left: 5px;
-      }
-
-      #persons-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        padding: 0;
-        flex: 1;
-      }
-
-      .persons-type-container {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        color: hsl(213, 42%, 9%);
-      }
-
-      .persons-type-header {
-        color: hsl(213, 9%, 44%);
-      }
-
-      .persons-type-header * {
-        margin: 0;
-        font-weight: 700;
-        padding-top: 12px;
-      }
-
-      .persons-type-container:first-of-type  {
-        padding-left: 24px;
-      }
-
-      .persons-type-container:last-of-type {
-        padding-right: 24px;
-      }
-
-      .persons-type-body {
-        height: 100%;
-      }
-
-      footer {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-      }
-
-      prinssen-ui-button {
-        margin: 12px 24px;
-        --prinssen-ui-button-fill: #877DE8;
-        --prinssen-ui-button-text-color: white;
-      }
-
-      ul {
-        list-style-type: none;
-        padding: 0;
-      }
-
-      li {
-        padding: 4px 0;
-      }
-
-      #header-main-container {
-        flex: 1;
-      }
-
-      #header-details-container {
-        flex: 0;
-        display: flex; 
-        flex-direction: column;
-        justify-content: space-between;
-        min-width: 225px;
-        text-align: end;
-      }
-
-      .icon-span-container:not(:last-of-type) {
-        color: hsl(212, 20%, 13%);
-      }
-
-      .icon-span-container span {
-        vertical-align:middle;
-      }
-
-      prinssen-ui-icon {
-        margin-right: 8px;
-      }
-    `;
-  }
-  render() {
-    return html`
-
-    <main>
-      <section>
-        <header>
-          <div id="header-main-container">
-          <h3 id="title">${this.name}</h3>
-          <span class="groups-span">
-            ${this.groups.map((val, i) => html`
-              <span class="clickable" data-name=${val.name} @click="${this._handleGroupClick}">${val.name}</span>
-              ${(this.groups.length !== 0 && i !== this.groups.length - 1) ? ' - ' : ''}
-            `)}
-          </span>
-        </div>
-          <div id="header-details-container">
-            <div class="icon-span-container">
-              <span id="date">${this._toReadableDate(this.timePerformed)}</span>
-              <prinssen-ui-icon
-                .icon="${'event'}"
-              ></prinssen-ui-icon>
-            </div>
-
-            <div class="icon-span-container">
-              <span class="clickable" data-name=${this.theater} @click="${this._handleTheaterClick}">${this.theater}</span>
-              <prinssen-ui-icon
-                .icon="${'city'}"
-              ></prinssen-ui-icon>
-            </div>
-            <div class="icon-span-container">
-              <span class="clickable" data-name=${this.city} @click="${this._handleCityClick}">${this.city}</span>
-              <prinssen-ui-icon
-                .icon="${'place'}"
-              ></prinssen-ui-icon>
-            </div>
-
-          </div>
-        </header>
-
-
-      </section>
-
-    
-      <section id="persons-container"> 
-        <div class="persons-type-container">
-          <div class="persons-type-header"><p>Actors</p></div>
-          <div class="persons-type-body"> 
-            <ul ?hidden=${this.actors.length === 0}>
-            ${this.actors.map((val, i) => html`
-              <li class="clickable" data-name=${val.name} @click="${this._handlePersonClick}">${val.name}</li>
-            `)}
-            </ul>
-          </div>
-        </div>
-        <div class="persons-type-container">
-          <div class="persons-type-header"><p>Directors</p></div>
-          <div class="persons-type-body"> 
-            <ul ?hidden=${this.directors.length === 0}>
-            ${this.directors.map((val, i) => html`
-            <li class="clickable" data-name=${val.name} @click="${this._handlePersonClick}">${val.name}</li>
-            `)}
-            </ul>
-          </div>
-        </div>
-        <div class="persons-type-container">
-          <div class="persons-type-header"><p>Writers</p></div>
-          <div class="persons-type-body"> 
-            <ul ?hidden=${this.writers.length === 0}>
-            ${this.writers.map((val, i) => html`
-              <li class="clickable" data-name=${val.name} @click="${this._handlePersonClick}">${val.name}</li>
-            `)}
-            </ul>
-          </div>
-        </div>
-      </section>
-      <footer>
-        <prinssen-ui-button
-          label="Review"
-          icon="arrow-right"
-          @click="${this._handleReviewClick}"
-        ></prinssen-ui-button>
-      </footer>
-    </main>
-`
-  }
+class PerformancePreview extends BaseElement {
   
   static get properties() {
     return {
@@ -272,6 +55,85 @@ class PerformancePreview extends LitElement {
     this.city = '';
     this.theater = '';
     this.timePerformed = '';
+
+    this.template = () => html`
+      <link rel="stylesheet" href="../styles/performance-preview.css">
+      <main>
+      <header class="flex-row nowrap space-between">
+        <div id="header-main-container">
+        <h5 id="title">${this.name}</h5>
+        <span class="groups-span">
+          ${this.groups.map((val, i) => html`
+            <span class="clickable" data-name=${val.name} @click="${this._handleGroupClick.bind(this)}">${val.name}</span>
+            ${(this.groups.length !== 0 && i !== this.groups.length - 1) ? ' - ' : ''}
+          `)}
+        </span>
+      </div>
+        <div id="header-details-container">
+          <div class="icon-span-container">
+            <span id="date">${this._toReadableDate(this.timePerformed)}</span>
+            <prinssen-ui-icon
+              .icon="${'event'}"
+            ></prinssen-ui-icon>
+          </div>
+
+          <div class="icon-span-container">
+            <span class="clickable" data-name=${this.theater} @click="${this._handleTheaterClick.bind(this)}">${this.theater}</span>
+            <prinssen-ui-icon
+              .icon="${'city'}"
+            ></prinssen-ui-icon>
+          </div>
+          <div class="icon-span-container">
+            <span class="clickable" data-name=${this.city} @click="${this._handleCityClick.bind(this)}">${this.city}</span>
+            <prinssen-ui-icon
+              .icon="${'place'}"
+            ></prinssen-ui-icon>
+          </div>
+
+        </div>
+      </header>
+    
+      <section id="persons-container"> 
+        <div class="persons-type-container">
+          <div class="persons-type-header"><p>Actors</p></div>
+          <div class="persons-type-body"> 
+            <ul ?hidden=${this.actors.length === 0}>
+            ${this.actors.map((val, i) => html`
+              <li><span class="clickable" data-name=${val.name} @click="${this._handlePersonClick.bind(this)}">${val.name}</span></li>
+            `)}
+            </ul>
+          </div>
+        </div>
+        <div class="persons-type-container">
+          <div class="persons-type-header"><p>Directors</p></div>
+          <div class="persons-type-body"> 
+            <ul ?hidden=${this.directors.length === 0}>
+            ${this.directors.map((val, i) => html`
+              <li><span class="clickable" data-name=${val.name} @click="${this._handlePersonClick.bind(this)}">${val.name}</span></li>
+            `)}
+            </ul>
+          </div>
+        </div>
+        <div class="persons-type-container">
+          <div class="persons-type-header"><p>Writers</p></div>
+          <div class="persons-type-body"> 
+            <ul ?hidden=${this.writers.length === 0}>
+            ${this.writers.map((val, i) => html`
+              <li><span class="clickable" data-name=${val.name} @click="${this._handlePersonClick.bind(this)}">${val.name}</span></li>
+            `)}
+            </ul>
+          </div>
+        </div>
+      </section>
+      <footer>
+        <prinssen-ui-button
+          label="Review"
+          icon="arrow-right"
+          @click="${this._handleReviewClick.bind(this)}"
+        ></prinssen-ui-button>
+      </footer>
+    </main>
+    `;
   }
 
   _toReadableDate(str) {

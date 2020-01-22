@@ -1,0 +1,122 @@
+@import "../styles/base.css";
+
+:host {
+  display: block;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+section {
+  display: block;
+  width: 100%;
+  padding: 12px 24px;
+  box-sizing: border-box;
+}
+
+section:not(:last-of-type) {
+  border-bottom: 2px solid hsl(210, 23%, 95%);
+}
+
+header {
+  display: flex;
+}
+
+#title {
+  font-weight: 700;
+  color: hsl(202, 57%, 15%);
+  margin: 24px 0 6px 0;
+}
+
+.groups-span {
+  color: hsl(213, 9%, 44%);
+}
+
+#persons-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 0;
+}
+
+.persons-type-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  color: hsl(213, 42%, 9%);
+}
+
+.persons-type-header {
+  color: hsl(213, 9%, 44%);
+  padding: 0 0 0 24px;
+}
+
+.persons-type-header * {
+  padding: 12px 0 0 0;
+  margin: 0;
+  font-weight: 700;
+}
+
+.persons-type-body {
+  padding: 0 0 0 24px;
+  height: 100%;
+}
+
+prinssen-ui-button {
+  margin: 12px 8px 12px 24px;
+  --prinssen-ui-button-fill: rgb(52, 126, 177);
+  --prinssen-ui-button-text-color: white;
+}
+
+textarea {
+  outline: none;
+  resize: none;
+  width: 100%;
+  height: 400px;
+  border: none;
+  box-sizing: border-box;
+  padding: 6px 12px;
+  transition: 0.3s rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+#header-main-container {
+  flex: 1;
+}
+
+#header-details-container {
+  flex: 0;
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 225px;
+}
+
+.icon-span-container:not(:last-of-type) {
+  color: hsl(212, 20%, 13%);
+  padding: 0 24px 0 0;  
+}
+
+.icon-span-container span {
+  vertical-align:middle;
+  text-align: end;
+}
+
+#nav-icon {
+  --prinssen-ui-icon-color: var(--prinssen-highlight-color, #877DE8);
+}

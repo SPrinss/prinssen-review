@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit-element';
+import { BaseElement, html} from './base-element.js';
 import './query-form.js';
 import './performance-preview';
 import './review-display';
@@ -6,95 +6,7 @@ import './review-display';
 /**
  * @customElement
  */
-class ReviewPage extends LitElement {
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-
-      query-form {
-        display: block;
-        padding: 12px;
-        background-color: #ffffff;
-        box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-        margin: 24px 0;
-        border-radius: 16px;
-      }
-
-      section {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-column-gap: 16px;
-      }
-
-      performance-preview, review-display {
-        background-color: white;
-        box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 6px;
-        margin: 24px 0;
-        border-radius: 16px;
-      }
-
-    `;
-  }
-  render() {
-    return html`
-
-    <main>
-    <query-form 
-        ?hidden=${this.reviewActive}
-        .persons=${this.filteredPersons}
-        .titles=${this.titles}
-        .groups=${this.filteredGroups}
-        .cities=${this.filteredCities}
-        .theaters=${this.filteredTheaters}
-        .selectedPerson=${this.selectedPerson}
-        .selectedGroup=${this.selectedGroup}
-        .selectedCity=${this.selectedCity}
-        .selectedTheater=${this.selectedTheater}
-        @selected-person-changed="${this._handleSelectedPersonChanged}"
-        @selected-title-changed="${this._handleSelectedTitleChanged}"
-        @selected-city-changed="${this._handleSelectedCityChanged}"
-        @selected-theater-changed="${this._handleSelectedTheaterChanged}"
-        @selected-group-changed="${this._handleSelectedGroupChanged}"
-        @selected-start-date-changed="${this._handleStartDateChanged}"
-        @selected-end-date-changed="${this._handleEndDateChanged}"
-        @custom-title-changed="${this._handleCustomTitleChanged}"
-      ></query-form>
-
-      ${this.reviewActive ? html`
-        <review-display
-          .reviewId="${this.reviewId}"
-          @back-clicked="${this._handleBackClicked}"
-        ></review-display>
-        
-      ` : html`
-      <section>
-        ${this.performances.map((val, i) =>  html`
-          <performance-preview
-            .name="${val.name || ''}"
-            .id="${val.id}"
-            .reviewId="${val.reviewId}"
-            .actors="${val.actors || []}"
-            .directors="${val.directors || []}"
-            .writers="${val.writers || []}"
-            .groups="${val.groups || []}"
-            .city="${val.city ? val.city.name : ''}"
-            .theater="${val.theater ? val.theater.name : ''}"
-            .timePerformed="${val.timePerformed}"
-            @review-clicked="${this._handleReviewClicked}"
-            @group-clicked="${this._handleGroupNameClicked}"
-            @person-clicked="${this._handlePersonNameClicked}"
-            @city-clicked="${this._handleCityNameClicked}"
-            @theater-clicked="${this._handleTheaterNameClicked}"
-          ></performance-preview>
-        `)}
-      </section>
-        ` }
-    </main>
-`
-  }
-  
+class ReviewPage extends BaseElement { 
   static get properties() {
     return {
       persons: {
@@ -181,6 +93,63 @@ class ReviewPage extends LitElement {
     this._getArrFromDb('groups', 'name', 5);
     this._getArrFromDb('cities', 'name', 5);
     this._getArrFromDb('theaters', 'name', 5);
+
+    this.template = () => html`
+      <link rel="stylesheet" href="../styles/review-page.css">
+
+      <main class="page-content-container">
+      <query-form 
+          ?hidden=${this.reviewActive}
+          .persons=${this.filteredPersons}
+          .titles=${this.titles}
+          .groups=${this.filteredGroups}
+          .cities=${this.filteredCities}
+          .theaters=${this.filteredTheaters}
+          .selectedPerson=${this.selectedPerson}
+          .selectedGroup=${this.selectedGroup}
+          .selectedCity=${this.selectedCity}
+          .selectedTheater=${this.selectedTheater}
+          @selected-person-changed="${this._handleSelectedPersonChanged.bind(this)}"
+          @selected-title-changed="${this._handleSelectedTitleChanged.bind(this)}"
+          @selected-city-changed="${this._handleSelectedCityChanged.bind(this)}"
+          @selected-theater-changed="${this._handleSelectedTheaterChanged.bind(this)}"
+          @selected-group-changed="${this._handleSelectedGroupChanged.bind(this)}"
+          @selected-start-date-changed="${this._handleStartDateChanged.bind(this)}"
+          @selected-end-date-changed="${this._handleEndDateChanged.bind(this)}"
+          @custom-title-changed="${this._handleCustomTitleChanged.bind(this)}"
+        ></query-form>
+
+        ${this.reviewActive ? html`
+          <review-display
+            .reviewId="${this.reviewId}"
+            @back-clicked="${this._handleBackClicked.bind(this)}"
+          ></review-display>
+          
+        ` : html`
+        <section>
+          ${this.performances.map((val, i) =>  html`
+            <performance-preview
+              .name="${val.name || ''}"
+              .id="${val.id}"
+              .reviewId="${val.reviewId}"
+              .actors="${val.actors || []}"
+              .directors="${val.directors || []}"
+              .writers="${val.writers || []}"
+              .groups="${val.groups || []}"
+              .city="${val.city ? val.city.name : ''}"
+              .theater="${val.theater ? val.theater.name : ''}"
+              .timePerformed="${val.timePerformed}"
+              @review-clicked="${this._handleReviewClicked.bind(this)}"
+              @group-clicked="${this._handleGroupNameClicked.bind(this)}"
+              @person-clicked="${this._handlePersonNameClicked.bind(this)}"
+              @city-clicked="${this._handleCityNameClicked.bind(this)}"
+              @theater-clicked="${this._handleTheaterNameClicked.bind(this)}"
+            ></performance-preview>
+          `)}
+        </section>
+          ` }
+      </main>
+    `
   }
 
   _handleSelectedTitleChanged(evt) {
@@ -209,6 +178,7 @@ class ReviewPage extends LitElement {
   }
 
   updated(props) {
+    super.updated();
     if(props.has('selectedTitle')) return this.getPerformanceByTitle(this.selectedTitle);
     if(props.has('selectedPerson') || props.has('selectedCity') || props.has('selectedTheater') || props.has('selectedGroup') || props.has('selectedStartDate') || props.has('selectedEndDate')) {
       this._setPerformances(this.selectedPerson, this.selectedCity, this.selectedTheater, this.selectedGroup, this.selectedStartDate, this.selectedEndDate)
@@ -369,7 +339,6 @@ class ReviewPage extends LitElement {
   _handlePersonNameClicked(evt) {
     const name = evt.detail.value;
     this.selectedPerson = this.persons.filter(person => person.name === name)[0];
-
   }
   _handleCityNameClicked(evt) {
     const name = evt.detail.value;
@@ -378,7 +347,7 @@ class ReviewPage extends LitElement {
   }
   _handleTheaterNameClicked(evt) {
     const name = evt.detail.value;
-    this.selectedPerson = this.theaters.filter(theater => theater.name === name)[0];
+    this.selectedTheater = this.theaters.filter(theater => theater.name === name)[0];
   }
 
   _handleStartDateChanged(evt) {

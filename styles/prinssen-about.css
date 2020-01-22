@@ -1,6 +1,23 @@
 @import "../styles/base.css";
 
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
+.hero-header {
+  background-image: url('../images/Pasproef Nationale Opera en Ballet.jpg');
+}
 
+section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
+section * {
+  flex: 1;
+  text-align: center;
+}
 

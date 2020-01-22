@@ -16,8 +16,25 @@ class PrinssenAbout extends BaseElement {
     <link rel="stylesheet" href="../styles/prinssen-about.css">
     
     
-    About
-    `;
+    <main>
+      <header class="hero-header">
+        <div class="hero-overlay">
+          <div class="page-content-container">
+            <h1>Margriet Prinssen</h1>
+          </div>
+        </div>
+      </header>
+      <section>
+        <div class="page-content-container">
+          <h3>Mijn verhaal</h3>
+          <p>
+            
+          </p>            
+        </div>
+          
+      </section>
+    </main>
+  `;
   }
 
 

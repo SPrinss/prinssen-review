@@ -1,5 +1,4 @@
 import { BaseElement, html} from './base-element.js';
-import './about-page';
 import './review-page';
 import './four-o-four-page';
 import './prinssen-location';
@@ -43,9 +42,9 @@ class PrinssenReviewApp extends BaseElement {
     this.router = {};
     this.url = {};
     this.routes = {
-      "Reviews": "/reviews",
+      "Recensies": "/recensies",
       "Interviews": "/interviews",
-      "About": "/about"
+      "Over": "/over"
     };  
     this.activeRoute = '';
     this.matchingRoutes = {};
@@ -70,19 +69,23 @@ class PrinssenReviewApp extends BaseElement {
 
       <header>
         <nav>
-          <h5><a href="/">Margriet Prinssen</a></h5>
+          <h5><a class="no-border" href="/">Margriet Prinssen</a></h5>
           <ul>
-            <li><a href="/reviews">Reviews</a></li>
-            <li><a href="/interviews">Interviews</a></li>
-            <li><a href="/about">About</a></li>
+            <li ?data-active="${!!this.activeRoute && this.activeRoute.toLowerCase() === 'recensies'}"><a href="/recensies">Recensies</a></li>
+            <li ?data-active="${!!this.activeRoute && this.activeRoute.toLowerCase() === 'interviews'}" ><a href="/interviews">Interviews</a></li>
+            <li ?data-active="${!!this.activeRoute && this.activeRoute.toLowerCase() === 'over'}"><a href="/over">Over</a></li>
           </ul>
         </nav>
       </header>
 
       ${(!this.activeRoute || this.activeRoute === '' || !this.activeRoute || this.activeRoute.toLowerCase() === 'home') ? this._renderHome() : ''}
-      ${(!!this.activeRoute && this.activeRoute.toLowerCase() === 'reviews') ? this._renderReviews() : ''}
+      ${(!!this.activeRoute && this.activeRoute.toLowerCase() === 'recensies') ? this._renderReviews() : ''}
       ${(!!this.activeRoute && this.activeRoute.toLowerCase() === 'interviews') ? this._renderInterviews() : ''}
-      ${(!!this.activeRoute && this.activeRoute.toLowerCase() === 'about') ? this._renderAbout() : ''}
+      ${(!!this.activeRoute && this.activeRoute.toLowerCase() === 'over') ? this._renderAbout() : ''}
+
+      <footer>
+
+      </footer>
 
     `;
   }

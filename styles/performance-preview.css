@@ -1,0 +1,96 @@
+@import "../styles/base.css";
+
+:host {
+  display: block;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  min-height: 100%; 
+}
+
+section, header {
+  padding: 12px 24px;
+}
+
+header {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: var(--prinssen-highlight-color);
+}
+
+header * {
+  color: white;
+}
+
+section:not(:last-of-type) {
+  border-bottom: 2px solid hsl(210, 23%, 95%);
+}
+
+#title {
+  margin-bottom: 6px;
+}
+
+.groups-span {
+  color: hsl(213, 9%, 44%);
+}
+
+#persons-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 0;
+  flex: 1;
+}
+
+.persons-type-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  color: hsl(213, 42%, 9%);
+}
+
+.persons-type-header {
+  color: hsl(213, 9%, 44%);
+}
+
+.persons-type-header * {
+  margin: 0;
+  font-weight: 700;
+  padding-top: 12px;
+}
+
+.persons-type-container:first-of-type  {
+  padding-left: 24px;
+}
+
+.persons-type-container:last-of-type {
+  padding-right: 24px;
+}
+
+.persons-type-body {
+  height: 100%;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+li {
+  padding: 4px 0;
+}
+
+
+
+#header-details-container {
+  flex: 0;
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 225px;
+  text-align: end;
+}

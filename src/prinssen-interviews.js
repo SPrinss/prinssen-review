@@ -15,8 +15,14 @@ class PrinssenInterviews extends BaseElement {
     this.template = () => html`
     <link rel="stylesheet" href="../styles/prinssen-interviews.css">
     
+    <main>
+      <section>
+        <div class="page-content-container">
+          Interviews
+        </div>
+      </section>
+    </main>
     
-    Interviews
     `;
   }
 

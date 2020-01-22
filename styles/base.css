@@ -1,6 +1,6 @@
 :host {
   --prinssen-margin: 200px;
-  --prinssen-highlight-color: #FFE600;
+  --prinssen-highlight-color: rgb(52, 126, 177);
 }
 
 * {
@@ -9,6 +9,65 @@
 
 .page {
   width: 100%;
+  padding: 24px;
+}
+
+.page-content-container {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.nowrap {
+  flex-wrap: nowrap;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.hero-header {
+  min-height: 580px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.hero-header .hero-overlay {
+  width: 100%;
+  background-color: hsla(0, 0%, 0%, .55);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.hero-header .hero-overlay div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1;
+  max-width: 1080px;
+}
+
+.hero-overlay h1 {
+  margin: 6px 0 ;
+}
+
+.hero-overlay h3 {
+  margin: 16px 0 32px 0;
+}
+
+h1, h3 {
+  align-self: baseline;
 }
 
 h1 {
@@ -22,7 +81,7 @@ h3 {
   font-family: 'Merriweather', sans-serif;
   font-style: normal;
   font-weight: 700;
-  font-size: 38px;
+  font-size: 32px;
 }
 
 h5 {
@@ -42,13 +101,66 @@ a {
   color: black;
 }
 
-li a:hover {
-  border-bottom: 1px solid black;
-}
-
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
   text-align: left;
+}
+
+li {
+  padding: 4px 0;
+}
+
+prinssen-ui-button {
+  margin: 12px 24px;
+  --prinssen-ui-icon-size: 24px;
+  --prinssen-ui-button-fill: rgb(52, 126, 177);
+  --prinssen-ui-button-text-color: white;
+}
+
+prinssen-ui-button:hover {
+  cursor: pointer;
+}
+
+prinssen-ui-icon {
+  --prinssen-ui-icon-size: 24px;
+  --prinssen-ui-icon-color: white;
+}
+
+
+img {
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.clickable:hover {
+  cursor: pointer;
+}
+
+a.clickable:hover, span.clickable:hover {
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  border-bottom-color: inherit;
+}
+
+
+@media screen and (max-width: 800px) {
+  h1 {
+    font-size: 38px;
+  }
+  h3 {
+    font-size: 22px;
+  }
+  h5 {
+    font-size: 12px;
+  }
+  
+}
+
+@media screen and (max-width: 800px) {
+  .header-overlay div { 
+    padding: 0 4px;
+  }
 }

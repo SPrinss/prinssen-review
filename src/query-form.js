@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit-element';
+import { BaseElement, html} from './base-element.js';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import '@vaadin/vaadin-date-picker/vaadin-date-picker.js';
 
@@ -6,92 +6,7 @@ import '@vaadin/vaadin-date-picker/vaadin-date-picker.js';
  * @customElement
  * @polymer
  */
-class QueryForm extends LitElement {
-  static get styles() {
-    return css`
-      vaadin-combo-box {
-        min-width: 300px;
-        margin: 0 4px;
-      }
-      vaadin-date-picker {
-        margin: 0 4px;
-      }
-      #title-box  {
-        min-width: 600px;
-      }
-      `;
-  }
-  render() {
-    return html`
-
-      <vaadin-combo-box 
-        id="title-box"
-        label="Titles"
-        .items="${this.titles}"
-        item-label-path="title"
-        .selected-="${this.selectedTitle.title}"
-        placeholder="Titles"
-        ?clear-button-visible="${true}"
-        ?allow-custom-value="${true}"
-        @custom-value-set="${this._handleTitleCustomValueChanged}"
-        @selected-item-changed="${this._handleSelectedTitleChanged}"
-      ></vaadin-combo-box>
-
-      <vaadin-combo-box 
-        label="Persons"
-        ?disabled="${!!this.selectedTitle.title}"
-        .items="${this._filterNames(this.persons)}"
-        .value="${this.selectedPerson.name}"
-        placeholder="Persons"
-        ?clear-button-visible="${true}"
-        @selected-item-changed="${this._handleSelectedPersonChanged}"
-      ></vaadin-combo-box>
-
-      <vaadin-combo-box 
-        label="Theater groups"
-        ?disabled="${!!this.selectedTitle.title}"
-        .items="${this._filterNames(this.groups)}"
-        .value="${this.selectedGroup.name}"
-        placeholder="Theater groups"
-        ?clear-button-visible="${true}"
-        @selected-item-changed="${this._handleSelectedGroupChanged}"
-      ></vaadin-combo-box>
-
-      <vaadin-combo-box 
-        label="Cities"
-        ?disabled="${!!this.selectedTitle.title}"
-        .items="${this._filterNames(this.cities)}"
-        .value="${this.selectedCity.name}"
-        placeholder="Cities"
-        ?clear-button-visible="${true}"
-        @selected-item-changed="${this._handleSelectedCityChanged}"
-      ></vaadin-combo-box>
-
-      <vaadin-combo-box 
-        label="Theaters"
-        ?disabled="${!!this.selectedTitle.title}"
-        .items="${this._filterNames(this.theaters)}"
-        .value="${this.selectedTheater.name}"
-        placeholder="Theaters"
-        ?clear-button-visible="${true}"
-        @selected-item-changed="${this._handleSelectedTheaterChanged}"
-      ></vaadin-combo-box>
-
-      <vaadin-date-picker
-        ?disabled="${!!this.selectedTitle.title}"
-        label="Start"
-        @value-changed="${this._handleStartDateChanged}"
-      ></vaadin-date-picker>
-
-      <vaadin-date-picker
-        ?disabled="${!!this.selectedTitle.title}"
-        label="End"
-        @value-changed="${this._handleEndDateChanged}"
-      ></vaadin-date-picker>
-
-`
-  }
-  
+class QueryForm extends BaseElement {
   static get properties() {
     return {
       persons: {
@@ -139,9 +54,83 @@ class QueryForm extends LitElement {
     this.selectedGroup = {};
     this.selectedCity = {};
     this.selectedTheater = {};
+
+    this.template = () => html`
+      <link rel="stylesheet" href="../styles/query-form.css">
+
+      <vaadin-combo-box 
+        id="title-box"
+        label="Titles"
+        .items="${this.titles}"
+        item-label-path="title"
+        .selected="${this.selectedTitle && this.selectedTitle.title}"
+        placeholder="Titles"
+        ?clear-button-visible="${true}"
+        ?allow-custom-value="${true}"
+        @custom-value-set="${this._handleTitleCustomValueChanged.bind(this)}"
+        @selected-item-changed="${this._handleSelectedTitleChanged.bind(this)}"
+      ></vaadin-combo-box>
+
+      <section>
+        <vaadin-combo-box 
+          label="Persons"
+          ?disabled="${this.selectedPerson && this.selectedPerson.title}"
+          .items="${this._filterNames(this.persons)}"
+          .value="${this.selectedPerson.name}"
+          placeholder="Persons"
+          ?clear-button-visible="${true}"
+          @selected-item-changed="${this._handleSelectedPersonChanged.bind(this)}"
+        ></vaadin-combo-box>
+
+        <vaadin-combo-box 
+          label="Theater groups"
+          ?disabled="${this.selectedGroup && this.selectedGroup.title}"
+          .items="${this._filterNames(this.groups)}"
+          .value="${this.selectedGroup.name}"
+          placeholder="Theater groups"
+          ?clear-button-visible="${true}"
+          @selected-item-changed="${this._handleSelectedGroupChanged.bind(this)}"
+        ></vaadin-combo-box>
+
+        <vaadin-combo-box 
+          label="Cities"
+          ?disabled="${this.selectedCity && this.selectedCity.title}"
+          .items="${this._filterNames(this.cities)}"
+          .value="${this.selectedCity.name}"
+          placeholder="Cities"
+          ?clear-button-visible="${true}"
+          @selected-item-changed="${this._handleSelectedCityChanged.bind(this)}"
+        ></vaadin-combo-box>
+
+        <vaadin-combo-box 
+          label="Theaters"
+          ?disabled="${this.selectedTitle && this.selectedTitle.title}"
+          .items="${this._filterNames(this.theaters)}"
+          .value="${this.selectedTheater.name}"
+          placeholder="Theaters"
+          ?clear-button-visible="${true}"
+          @selected-item-changed="${this._handleSelectedTheaterChanged.bind(this)}"
+        ></vaadin-combo-box>
+      </section>
+
+      <vaadin-date-picker
+        ?disabled="${this.selectedTitle && this.selectedTitle.title}"
+        label="Start"
+        @value-changed="${this._handleStartDateChanged.bind(this)}"
+      ></vaadin-date-picker>
+
+      <vaadin-date-picker
+        ?disabled="${this.selectedTitle && this.selectedTitle.title}"
+        label="End"
+        @value-changed="${this._handleEndDateChanged.bind(this)}"
+      ></vaadin-date-picker>
+
+    `;
+
   }
 
   updated(props) {
+    super.updated();
     if(props.has('titles')) this.openTitleBox()
   }
 
@@ -173,7 +162,7 @@ class QueryForm extends LitElement {
   _handleSelectedGroupChanged(evt) {
     const filteredGroup = this.groups.filter(group => group.name === evt.detail.value);
     this.selectedGroup = filteredGroup[0]  || {};
-    console.log(this.groups, filteredGroup)
+    // console.log(this.groups, filteredGroup)
     this.dispatchEvent(new CustomEvent('selected-group-changed', {detail: {value: this.selectedGroup}}))
 
   }
